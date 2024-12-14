@@ -1,0 +1,38 @@
+# Crear el gráfico interactivo
+fig = go.Figure()
+
+# Añadir la trayectoria de la partícula
+fig.add_trace(go.Scatter3d(
+    x=r[:, 0], y=r[:, 1], z=r[:, 2],
+    mode='lines',
+    line=dict(color='blue', width=2),
+    name='Trayectoria de la partícula'
+))
+
+# Añadir el monopolo magnético
+fig.add_trace(go.Scatter3d(
+    x=[0], y=[0], z=[0],
+    mode='markers',
+    marker=dict(size=5, color='red'),
+    name='Monopolo magnético'
+))
+
+# Encontrar el rango máximo de los ejes
+max_range = np.max(np.abs(r))
+
+# Configurar los ejes y el diseño
+fig.update_layout(
+    scene=dict(
+        xaxis_title='X',
+        yaxis_title='Y',
+        zaxis_title='Z',
+        xaxis=dict(range=[-max_range, max_range]),  # Establecer el mismo rango para el eje X
+        yaxis=dict(range=[-max_range, max_range]),  # Establecer el mismo rango para el eje Y
+        zaxis=dict(range=[-max_range, max_range])   # Establecer el mismo rango para el eje Z
+    ),
+    legend=dict(x=0, y=1),
+    margin=dict(l=0, r=0, b=0, t=30)  # Ajustar los márgenes
+)
+
+# Mostrar el gráfico interactivo
+fig.show()
